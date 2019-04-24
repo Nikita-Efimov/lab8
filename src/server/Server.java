@@ -37,13 +37,6 @@ class Handle extends Thread {
         }
     }
 
-    private void getSerializedData(String data) {
-        try {
-            PriorityQueue<City> pq = (PriorityQueue<City>)Convertr.convertFromByteString(data);
-            worker.set(pq);
-         } catch (Exception e) {}
-    }
-
     private void processInput(String clientData) {
         // System.out.println('>' + clientData);
 
@@ -94,14 +87,9 @@ class Handle extends Thread {
             return;
         }
 
-        final String PREAMBLE = "#####";
-        if (clientData.indexOf(PREAMBLE) == 0)
-            getSerializedData(clientData.substring(PREAMBLE.length()));
-        else {
-            String out = worker.doCmd(clientData);
-            if (!out.equals(""))
-                send(out);
-        }
+        String out = worker.doCmd(clientData);
+        if (!out.equals(""))
+            send(out);
     }
 
     private void send(String msg) {

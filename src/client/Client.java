@@ -85,13 +85,7 @@ class ClientInteraction {
                     str = inputUser.readLine(); // сообщения с консоли
 
                     final String firstPart = str.split(" ")[0].trim();
-                    if (firstPart.equals("import")) {
-                        if (str.split(" ").length != 2) {
-                            System.out.println("uncorrect syntax, correct syntax import <filename>");
-                            continue;
-                        }
-                        load(str.split(" ")[1].trim());
-                    } else if (firstPart.equals("auth")) {
+                    if (firstPart.equals("auth")) {
                         if (str.split(" ").length != 3) {
                             System.out.println("uncorrect syntax, correct syntax auth <login> <password>");
                             continue;
@@ -108,48 +102,6 @@ class ClientInteraction {
                     ClientInteraction.this.downService();
                 }
             }
-        }
-    }
-
-    private void load(final String filename) {
-        PriorityQueue<City> priorityQueue = new PriorityQueue<>();
-        try {
-            FileReader reader = new FileReader(filename);
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(new InputSource(reader));
-            doc.getDocumentElement().normalize();
-
-            NodeList nList = doc.getElementsByTagName("city");
-
-            for (int temp = 0; temp < nList.getLength(); temp++) {
-                Node nNode = nList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element)nNode;
-                    priorityQueue.add(
-                    new City(eElement.getElementsByTagName("name").item(0).getTextContent(),
-                             Integer.parseInt(eElement.getElementsByTagName("size").item(0).getTextContent()),
-                             Integer.parseInt(eElement.getElementsByTagName("x").item(0).getTextContent()),
-                             Integer.parseInt(eElement.getElementsByTagName("y").item(0).getTextContent())));
-                }
-            }
-
-            String str = "";
-            final String PREAMBLE = "#####";
-            try {
-                str = Convertr.convertToByteString(priorityQueue);
-            } catch (IOException e) {}
-
-            try {
-                out.write(PREAMBLE + str + '\n');
-                out.flush();
-            } catch (IOException e) {
-                ClientInteraction.this.downService(); // в случае исключения тоже харакири
-            }
-        } catch (java.io.FileNotFoundException e) {
-            System.out.println("file not found");
-        } catch (Exception e) {
-            System.out.println("error while parsing");
         }
     }
 }
