@@ -30,6 +30,8 @@ class Menu extends JMenuBar {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("add");
+                    GetCityFromPopUp gcfpu = new GetCityFromPopUp();
+                    gcfpu.hold();
                 }
             }
         );

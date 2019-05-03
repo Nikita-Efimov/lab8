@@ -6,10 +6,10 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 class PopUpWindow extends JFrame {
-    private final int MIN_WIDTH = 290;
-    private final int MAX_WIDTH = 290;
-    private ArrayList<JTextField> inputFields = new ArrayList();
-    private volatile boolean breakPoint = false;
+    protected final int MIN_WIDTH = 290;
+    protected final int MAX_WIDTH = 290;
+    protected ArrayList<JTextField> inputFields = new ArrayList();
+    protected volatile boolean breakPoint = false;
 
     class SubmitButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -34,7 +34,7 @@ class PopUpWindow extends JFrame {
     }
 
     public PopUpWindow(String[] fields) {
-        super("Lab");
+        // super("Lab");
 
         JPanel panel = new JPanel(); // the panel is not visible in output
         Box vericalBox = Box.createVerticalBox();
@@ -74,5 +74,25 @@ class PopUpWindow extends JFrame {
         } catch(InterruptedException e) {
             e.printStackTrace();
         }
+    }
+}
+
+class GetCityFromPopUp extends PopUpWindow {
+    class SubmitButtonEventListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("kek");
+            Iterator itr = inputFields.iterator();
+            while(itr.hasNext()) {
+                JTextField field = (JTextField)itr.next();
+                System.out.println(field.getText());
+            }
+
+            breakPoint = true;
+            dispose();
+        }
+    }
+
+    public GetCityFromPopUp() {
+        super(new String[]{"name", "size", "x", "y"});
     }
 }
