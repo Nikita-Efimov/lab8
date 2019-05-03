@@ -18,6 +18,7 @@ class ClientInteraction {
     private String login;
     private String password;
     private volatile boolean status;
+    private Gui gui;
 
     public ClientInteraction(String addr, int port) {
         this.addr = addr;
@@ -38,6 +39,7 @@ class ClientInteraction {
             password = null;
             new ReadMsg().start(); // нить читающая сообщения из сокета в бесконечном цикле
             new WriteMsg().start(); // нить пишущая сообщения в сокет приходящие с консоли в бесконечном цикле
+            gui = new Gui();
         } catch (IOException e) {
             ClientInteraction.this.downService();
         }
@@ -67,6 +69,8 @@ class ClientInteraction {
                     str = in.readLine(); // ждем сообщения с сервера
                     if (str.equals(null)) break;
                     if (str.trim().equals("")) continue;
+
+                    gui.getTextArea().print("-> " + str);
                     System.out.println("-> " + str); // пишем сообщение с сервера на консоль
                 }
             } catch (Exception e) {
