@@ -13,16 +13,12 @@ class ClientInteraction {
     private BufferedReader in; // поток чтения из сокета
     private BufferedWriter out; // поток чтения в сокет
     private BufferedReader inputUser; // поток чтения с консоли
-    private String addr; // ip адрес клиента
-    private int port; // порт соединения
     private String login;
     private String password;
     private volatile boolean status;
     private Gui gui;
 
     public ClientInteraction(String addr, int port) {
-        this.addr = addr;
-        this.port = port;
         this.status = true;
 
         try {

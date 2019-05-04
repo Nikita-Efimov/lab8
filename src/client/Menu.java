@@ -29,9 +29,13 @@ class Menu extends JMenuBar {
         m12.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("add");
-                    GetCityFromPopUp gcfpu = new GetCityFromPopUp();
-                    gcfpu.hold();
+                    PopUpWindow puw = new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                        @Override
+                        public void handle() {
+                            City city = getCity();
+                            System.out.println(city.toString());
+                        }
+                    };
                 }
             }
         );
@@ -46,6 +50,14 @@ class Menu extends JMenuBar {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("remove");
+                    
+                    PopUpWindow puw = new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                        @Override
+                        public void handle() {
+                            City city = getCity();
+                            System.out.println(city.toString());
+                        }
+                    };
                 }
             }
         );
@@ -53,6 +65,14 @@ class Menu extends JMenuBar {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("add_if_max");
+
+                    PopUpWindow puw = new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                        @Override
+                        public void handle() {
+                            City city = getCity();
+                            System.out.println(city.toString());
+                        }
+                    };
                 }
             }
         );
@@ -114,6 +134,16 @@ class Menu extends JMenuBar {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("log in");
+
+                    PopUpWindow puw = new PopUpWindow(new String[] { "login", "password" }) {
+                        @Override
+                        public void handle() {
+                            String[] answers = (String[]) getAnswersArr();
+
+                            System.out.println("login: " + answers[0]);
+                            System.out.println("password: " + answers[1]);
+                        }
+                    };
                 }
             }
         );
@@ -121,6 +151,15 @@ class Menu extends JMenuBar {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("sign in");
+
+                    PopUpWindow puw = new PopUpWindow(new String[] { "login" }) {
+                        @Override
+                        public void handle() {
+                            String[] answers = (String[]) getAnswersArr();
+
+                            System.out.println("login: " + answers[0]);
+                        }
+                    };
                 }
             }
         );

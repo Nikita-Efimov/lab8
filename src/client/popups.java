@@ -6,28 +6,58 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 class PopUpWindow extends JFrame {
-    protected final int MIN_WIDTH = 290;
-    protected final int MAX_WIDTH = 290;
-    protected ArrayList<JTextField> inputFields = new ArrayList();
+    protected final int WIDTH = 340;
+    protected ArrayList<JTextField> inputFields = new ArrayList<>();
+    protected ArrayList<String> answers = new ArrayList<>();
     protected volatile boolean breakPoint = false;
+
+    public City getCity() {
+        String[] answers = (String[]) getAnswersArr();
+
+        Integer size = 0;
+        try {
+            size = Integer.parseInt(answers[1]);
+        } catch (java.lang.NumberFormatException ignored) {
+        }
+
+        Integer x = 0;
+        try {
+            x = Integer.parseInt(answers[2]);
+        } catch (java.lang.NumberFormatException ignored) {
+        }
+
+        Integer y = 0;
+        try {
+            y = Integer.parseInt(answers[2]);
+        } catch (java.lang.NumberFormatException ignored) {
+        }
+
+        City city = new City(answers[0], size, x, y);
+        return city;
+    }
+
+    public void handle() {
+
+    }
 
     class SubmitButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Submited");
             Iterator itr = inputFields.iterator();
             while(itr.hasNext()) {
                 JTextField field = (JTextField)itr.next();
-                System.out.println(field.getText());
+                
+                // System.out.println(field.getText());
+                answers.add(field.getText());
             }
 
             PopUpWindow.this.breakPoint = true;
             PopUpWindow.this.dispose();
+            handle();
         }
     }
 
     class CloseButtonEventListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Closed");
             PopUpWindow.this.breakPoint = true;
             PopUpWindow.this.dispose();
         }
@@ -62,37 +92,13 @@ class PopUpWindow extends JFrame {
         final int HEIGHT = fields.length * 30 + 50;
         //Adding Components to the frame.
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(MIN_WIDTH, HEIGHT);
+        this.setSize(WIDTH, HEIGHT);
         this.getContentPane().add(BorderLayout.EAST, panel);
         this.setResizable(false);
         this.setVisible(true);
     }
 
-    public void hold() {
-        try {
-            while(!breakPoint) TimeUnit.SECONDS.sleep(1);
-        } catch(InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-class GetCityFromPopUp extends PopUpWindow {
-    class SubmitButtonEventListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("kek");
-            Iterator itr = inputFields.iterator();
-            while(itr.hasNext()) {
-                JTextField field = (JTextField)itr.next();
-                System.out.println(field.getText());
-            }
-
-            breakPoint = true;
-            dispose();
-        }
-    }
-
-    public GetCityFromPopUp() {
-        super(new String[]{"name", "size", "x", "y"});
+    public String[] getAnswersArr() {
+        return (String[])answers.toArray(new String[answers.size()]);
     }
 }
