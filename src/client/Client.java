@@ -9,43 +9,39 @@ import java.util.stream.Collectors;
 import org.xml.sax.InputSource;
 
 class ClientInteraction {
-    private Socket socket;
-    private BufferedReader in; // поток чтения из сокета
-    private BufferedWriter out; // поток чтения в сокет
-    private BufferedReader inputUser; // поток чтения с консоли
-    private String login;
-    private String password;
-    private volatile boolean status;
-    private Gui gui;
+    private static Socket socket;
+    private static BufferedReader in; // поток чтения из сокета
+    private static BufferedWriter out; // поток чтения в сокет
+    private static String login;
+    private static String password;
+    private static volatile boolean status;
+    private static Gui gui;
 
     public ClientInteraction(String addr, int port) {
-        this.status = true;
+        status = true;
 
         try {
-            this.socket = new Socket(addr, port);
+            socket = new Socket(addr, port);
         } catch (IOException e) {}
 
         try {
-            // потоки чтения из сокета / записи в сокет, и чтения с консоли
-            inputUser = new BufferedReader(new InputStreamReader(System.in));
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             System.out.println("Успешное подключение");
             login = null;
             password = null;
             new ReadMsg().start(); // нить читающая сообщения из сокета в бесконечном цикле
-            new WriteMsg().start(); // нить пишущая сообщения в сокет приходящие с консоли в бесконечном цикле
             gui = new Gui();
         } catch (IOException e) {
-            ClientInteraction.this.downService();
+            ClientInteraction.downService();
         }
     }
 
-    private void downService() {
+    private static void downService() {
         try {
-            if (!this.status) return;
+            if (!ClientInteraction.status) return;
             System.err.println("Сервер недоступен");
-            this.status = false;
+            ClientInteraction.status = false;
             if (!socket.isClosed()) {
                 socket.close();
                 in.close();
@@ -67,42 +63,26 @@ class ClientInteraction {
                     if (str.trim().equals("")) continue;
 
                     gui.getTextArea().print("-> " + str);
-                    System.out.println("-> " + str); // пишем сообщение с сервера на консоль
+                    // System.out.println("-> " + str); // пишем сообщение с сервера на консоль
                 }
             } catch (Exception e) {
-                ClientInteraction.this.downService();
+                ClientInteraction.downService();
             }
         }
     }
 
-    // нить обрабатывающая сообщения приходящие с консоли
-    private class WriteMsg extends Thread {
-        @Override
-        public void run() {
-            while (status) {
-                String str;
-                try {
-                    str = inputUser.readLine(); // сообщения с консоли
-
-                    final String firstPart = str.split(" ")[0].trim();
-                    if (firstPart.equals("auth")) {
-                        if (str.split(" ").length != 3) {
-                            System.out.println("uncorrect syntax, correct syntax auth <login> <password>");
-                            continue;
-                        }
-                        login = str.split(" ")[1].trim();
-                        password = str.split(" ")[2].trim();
-                        password = SHA1.encrypt(password);
-                    } else {
-                        // Send cmd to server
-                        out.write(str + ' ' + password + ' ' + login  + '\n');
-                        out.flush(); // чистим
-                    }
-                } catch (IOException e) {
-                    ClientInteraction.this.downService();
-                }
-            }
+    public static void send(String str) {
+        try {
+            out.write(str + ' ' + password + ' ' + login + '\n');
+            out.flush(); // чистим (вилкой)
+        } catch (IOException e) {
+            ClientInteraction.downService();
         }
+    }
+
+    public static void setLoginAndPassword(String login, String password) {
+        ClientInteraction.login = login;
+        ClientInteraction.password = SHA1.encrypt(password);
     }
 }
 

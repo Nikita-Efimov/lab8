@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 class Menu extends JMenuBar {
+    private static final long serialVersionUID = 1L;
+
     public Menu() {
         JMenu m1 = new JMenu("commands");
         JMenu m2 = new JMenu("help");
@@ -22,18 +24,22 @@ class Menu extends JMenuBar {
         m11.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("show");
+                    // System.out.println("show");
+                    ClientInteraction.send("show");
                 }
             }
         );
         m12.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    PopUpWindow puw = new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                    new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                        private static final long serialVersionUID = 1L;
+
                         @Override
                         public void handle() {
                             City city = getCity();
-                            System.out.println(city.toString());
+                            // System.out.println(city.toString());
+                            ClientInteraction.send("add " + city.toJson());
                         }
                     };
                 }
@@ -42,7 +48,8 @@ class Menu extends JMenuBar {
         m13.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("remove_first");
+                    // System.out.println("remove_first");
+                    ClientInteraction.send("remove_first");
                 }
             }
         );
@@ -51,11 +58,14 @@ class Menu extends JMenuBar {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("remove");
                     
-                    PopUpWindow puw = new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                    new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                        private static final long serialVersionUID = 1L;
+
                         @Override
                         public void handle() {
                             City city = getCity();
-                            System.out.println(city.toString());
+                            // System.out.println(city.toString());
+                            ClientInteraction.send("remove " + city.toJson());
                         }
                     };
                 }
@@ -66,11 +76,14 @@ class Menu extends JMenuBar {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("add_if_max");
 
-                    PopUpWindow puw = new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                    new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                        private static final long serialVersionUID = 1L;
+
                         @Override
                         public void handle() {
                             City city = getCity();
-                            System.out.println(city.toString());
+                            // System.out.println(city.toString());
+                            ClientInteraction.send("add_if_max " + city.toJson());
                         }
                     };
                 }
@@ -90,35 +103,40 @@ class Menu extends JMenuBar {
         m21.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("man show");
+                    // System.out.println("man show");
+                    ClientInteraction.send("man show");
                 }
             }
         );
         m22.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("man add");
+                    // System.out.println("man add");
+                    ClientInteraction.send("man add");
                 }
             }
         );
         m23.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("man remove_first");
+                    // System.out.println("man remove_first");
+                    ClientInteraction.send("man remove_first");
                 }
             }
         );
         m24.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("man remove");
+                    // System.out.println("man remove");
+                    ClientInteraction.send("man remove");
                 }
             }
         );
         m25.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("man add_if_max");
+                    // System.out.println("man add_if_max");
+                    ClientInteraction.send("man add_if_max");
                 }
             }
         );
@@ -133,15 +151,18 @@ class Menu extends JMenuBar {
         m31.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("log in");
+                    // System.out.println("log in");
 
-                    PopUpWindow puw = new PopUpWindow(new String[] { "login", "password" }) {
+                    new PopUpWindow(new String[] { "login", "password" }) {
+                        private static final long serialVersionUID = 1L;
+
                         @Override
                         public void handle() {
                             String[] answers = (String[]) getAnswersArr();
-
-                            System.out.println("login: " + answers[0]);
-                            System.out.println("password: " + answers[1]);
+                            
+                            // System.out.println("login: " + answers[0]);
+                            // System.out.println("password: " + answers[1]);
+                            ClientInteraction.setLoginAndPassword(answers[0], answers[1]);
                         }
                     };
                 }
@@ -150,14 +171,17 @@ class Menu extends JMenuBar {
         m32.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("sign in");
+                    // System.out.println("sign in");
 
-                    PopUpWindow puw = new PopUpWindow(new String[] { "login" }) {
+                    new PopUpWindow(new String[] { "login" }) {
+                        private static final long serialVersionUID = 1L;
+
                         @Override
                         public void handle() {
                             String[] answers = (String[]) getAnswersArr();
 
-                            System.out.println("login: " + answers[0]);
+                            // System.out.println("login: " + answers[0]);
+                            ClientInteraction.send("reg " + answers[0]);
                         }
                     };
                 }

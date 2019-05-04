@@ -32,6 +32,10 @@ class City extends Place implements Comparable, Serializable {
 		this.y = y;
 	}
 
+	public String toJson() {
+		return "{name: \'" + name + "\', size: " + areaSize + " , x: " + x + " , y: " + y + "}";
+	}
+
 	public int getAreaSize() {
 		return areaSize;
 	}
