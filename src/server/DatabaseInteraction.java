@@ -1,5 +1,3 @@
-
-
 import java.lang.reflect.Field;
 import java.sql.*;
 import java.time.OffsetDateTime;
@@ -23,27 +21,14 @@ interface DBCityCollection {
     public boolean removeLower(City city);
 }
 
-
 class DatabaseInteraction implements DBUserInteractionable, DBCityCollection {
-
-
-
-
-     private Connection dbConnection;
-
-
+    private Connection dbConnection;
     private Database db;
 
     public DatabaseInteraction() {
-
             db=new Database();
-
             dbConnection=db.dbConnection;
-
-
     }
-
-
 
     private void activateQuery(final String q) throws SQLException {
         Statement statement;

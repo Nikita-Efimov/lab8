@@ -119,14 +119,9 @@ class City extends Place implements Comparable, Serializable {
     @Override
     public String toString() {
         return id+" Имя города: " + name + "\nПлощадь: " + areaSize + "\nКоординаты: " + x + ", " + y + "\nДата создания объекта: " + initDate.format(DateTimeFormatter.ofPattern("cccc, dd MMMM, yyyy kk:mm X"));
-    }
-
-
-
-
-
-
-
-
-
+	}
+	
+	public String toJson() {
+		return "{name: \'" + name + "\', size: " + areaSize + " , x: " + x + " , y: " + y + "}";
+	}
 }

@@ -1,6 +1,3 @@
-
-
-
 import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,13 +9,13 @@ import java.util.Map;
 public class Database {
     private static final String DB_DRIVER = "org.postgresql.Driver";
 
-     private static final String DB_PASSWORD = "admin";
-     private static final String DB_USER = "postgres";
-     private static final String DB_CONNECTION = "jdbc:postgresql://127.0.0.1:5432/laba7DB";
+    //  private static final String DB_PASSWORD = "admin";
+    //  private static final String DB_USER = "postgres";
+    //  private static final String DB_CONNECTION = "jdbc:postgresql://127.0.0.1:5432/laba7DB";
 
-    //private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/lab7";
-    //private static final String DB_USER = "root";
-    //private static final String DB_PASSWORD = "root";
+    private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/lab7";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "root";
     public Connection dbConnection;
 
 
