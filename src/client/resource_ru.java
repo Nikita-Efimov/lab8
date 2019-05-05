@@ -15,7 +15,14 @@ public class resource_ru extends ListResourceBundle {
             {"commands","команды"},
             {"help","помощь"},
             {"authorization","авторизация"},
-            {"laguages","сменить язык"}
+            {"login","логин"},
+            {"password","пароль"},
+            {"laguages","сменить язык"},
+
+
+            {"name","имя"},
+            {"size","размер"}
+
 
 
 

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import javax.swing.text.*;
 import java.awt.event.*;
+import java.text.DateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +53,8 @@ class Menu extends JMenuBar {
         m12.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                    new PopUpWindow(new String[] { Gui.resourceBundle.getString("name"),
+                            Gui.resourceBundle.getString("size"), "x", "y" }) {
                         private static final long serialVersionUID = 1L;
 
                         @Override
@@ -78,7 +80,8 @@ class Menu extends JMenuBar {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("remove");
                     
-                    new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                    new PopUpWindow(new String[] {Gui.resourceBundle.getString("name"),
+                            Gui.resourceBundle.getString("size"), "x", "y" }) {
                         private static final long serialVersionUID = 1L;
 
                         @Override
@@ -96,7 +99,8 @@ class Menu extends JMenuBar {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("add_if_max");
 
-                    new PopUpWindow(new String[] { "name", "size", "x", "y" }) {
+                    new PopUpWindow(new String[] { Gui.resourceBundle.getString("name"),
+                            Gui.resourceBundle.getString("size"), "x", "y" }) {
                         private static final long serialVersionUID = 1L;
 
                         @Override
@@ -173,7 +177,7 @@ class Menu extends JMenuBar {
                 public void actionPerformed(ActionEvent e) {
                     // System.out.println("log in");
 
-                    new PopUpWindow(new String[] { "login", "password" }) {
+                    new PopUpWindow(new String[] { Gui.resourceBundle.getString("login"), Gui.resourceBundle.getString("password") }) {
                         private static final long serialVersionUID = 1L;
 
                         @Override
@@ -193,7 +197,7 @@ class Menu extends JMenuBar {
                 public void actionPerformed(ActionEvent e) {
                     // System.out.println("sign in");
 
-                    new PopUpWindow(new String[] { "login" }) {
+                    new PopUpWindow(new String[] { Gui.resourceBundle.getString("login") }) {
                         private static final long serialVersionUID = 1L;
 
                         @Override

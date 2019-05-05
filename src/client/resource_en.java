@@ -15,7 +15,11 @@ public class resource_en extends ListResourceBundle {
             {"commands","commands"},
             {"help","help"},
             {"authorization","authorization"},
-            {"laguages","laguages"}
+            {"login","login"},
+            {"password","password"},
+            {"laguages","laguages"},
+            {"name","name"},
+            {"size","size"}
 
 
     } ;

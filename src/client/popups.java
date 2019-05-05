@@ -63,6 +63,10 @@ class PopUpWindow extends JFrame {
         }
     }
 
+
+    JButton submitButton;
+    JButton closeButton;
+
     public PopUpWindow(String[] fields) {
         // super("Lab");
 
@@ -78,8 +82,8 @@ class PopUpWindow extends JFrame {
             vericalBox.add(box);
         }
 
-        JButton submitButton = new JButton("Submit");
-        JButton closeButton = new JButton("Close");
+         submitButton = new JButton(Gui.resourceBundle.getString("submit"));
+         closeButton = new JButton(Gui.resourceBundle.getString("close"));
         submitButton.addActionListener(new SubmitButtonEventListener());
         closeButton.addActionListener(new CloseButtonEventListener());
         Box box = Box.createHorizontalBox();
