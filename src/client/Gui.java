@@ -13,8 +13,13 @@ class Gui extends JFrame {
     private Menu menu;
     private TextArea ta;
 
+    public static ResourceBundle resourceBundle;
+
     public Gui() {
         super("Lab");
+        resourceBundle=ResourceBundle.getBundle
+                ("resource_ru",new Locale("ru","RU"));
+
         menu = new Menu();
         ta = new TextArea();
 

@@ -15,7 +15,7 @@ class ClientInteraction {
     private static String login;
     private static String password;
     private static volatile boolean status;
-    private static Gui gui;
+    public static Gui gui;
 
     public ClientInteraction(String addr, int port) {
         status = true;
@@ -33,6 +33,7 @@ class ClientInteraction {
             new ReadMsg().start(); // нить читающая сообщения из сокета в бесконечном цикле
             gui = new Gui();
         } catch (IOException e) {
+
             ClientInteraction.downService();
         }
     }
@@ -94,6 +95,7 @@ public class Client {
         try {
             new ClientInteraction(ipAddr, port);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Сервер недоступен");
         }
     }

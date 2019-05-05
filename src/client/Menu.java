@@ -8,21 +8,32 @@ import java.util.concurrent.TimeUnit;
 class Menu extends JMenuBar {
     private static final long serialVersionUID = 1L;
 
+
+    JMenu m1;
+    JMenu m2;
+    JMenu m3;
+    JMenu m4;
+
+    JMenuItem m11;
+    JMenuItem m12;
+    JMenuItem m13;
+    JMenuItem m14;
+    JMenuItem m15;
     public Menu() {
-        JMenu m1 = new JMenu("commands");
-        JMenu m2 = new JMenu("help");
-        JMenu m3 = new JMenu("authorization");
-        JMenu m4 = new JMenu("laguages");
+         m1 = new JMenu("commands");
+         m2 = new JMenu("help");
+         m3 = new JMenu("authorization");
+         m4 = new JMenu("laguages");
         add(m1);
         add(m2);
         add(m3);
         add(m4);
 
-        JMenuItem m11 = new JMenuItem("show");
-        JMenuItem m12 = new JMenuItem("add");
-        JMenuItem m13 = new JMenuItem("remove_first");
-        JMenuItem m14 = new JMenuItem("remove");
-        JMenuItem m15 = new JMenuItem("add_if_max");
+         m11 = new JMenuItem(Gui.resourceBundle.getString("show"));
+         m12 = new JMenuItem(Gui.resourceBundle.getString("add"));
+         m13 = new JMenuItem(Gui.resourceBundle.getString("remove_first"));
+         m14 = new JMenuItem(Gui.resourceBundle.getString("remove"));
+         m15 = new JMenuItem(Gui.resourceBundle.getString("add_if_max"));
         m11.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -192,12 +203,23 @@ class Menu extends JMenuBar {
         m3.add(m31);
         m3.add(m32);
 
-        JMenuItem m41 = new JMenuItem("laguage 1");
-        JMenuItem m42 = new JMenuItem("laguage 2");
+        JMenuItem m41 = new JMenuItem("ru");
+        JMenuItem m42 = new JMenuItem("en");
         m41.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("l1");
+
+                    Gui.resourceBundle=ResourceBundle.getBundle("resource_ru",
+                            new Locale("ru","RU"));
+                    m11.setText(Gui.resourceBundle.getString("show"));
+                    m12.setText(Gui.resourceBundle.getString("add"));
+                    m13.setText(Gui.resourceBundle.getString("remove_first"));
+                    m14.setText(Gui.resourceBundle.getString("remove"));
+                    m15.setText(Gui.resourceBundle.getString("add_if_max)"));
+
+
+
                 }
             }
         );
@@ -205,6 +227,15 @@ class Menu extends JMenuBar {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("l2");
+
+                    Gui.resourceBundle=ResourceBundle.getBundle("resource_en",
+                            new Locale("en","US"));
+                    m11.setText(Gui.resourceBundle.getString("show"));
+                    m12.setText(Gui.resourceBundle.getString("add"));
+                    m13.setText(Gui.resourceBundle.getString("remove_first"));
+                    m14.setText(Gui.resourceBundle.getString("remove"));
+                    m15.setText(Gui.resourceBundle.getString("add_if_max"));
+
                 }
             }
         );
