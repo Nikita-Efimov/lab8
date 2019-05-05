@@ -54,15 +54,15 @@ class Menu extends JMenuBar {
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     new PopUpWindow(new String[] { Gui.resourceBundle.getString("name"),
-                            Gui.resourceBundle.getString("size"), "x", "y" }) {
-                        private static final long serialVersionUID = 1L;
+                        Gui.resourceBundle.getString("size"), "x", "y" }) {
+                            private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void handle() {
-                            City city = getCity();
-                            // System.out.println(city.toString());
-                            ClientInteraction.send("add " + city.toJson());
-                        }
+                            @Override
+                            public void handle() {
+                                City city = getCity();
+                                // System.out.println(city.toString());
+                                ClientInteraction.send("add " + city.toJson());
+                            }
                     };
                 }
             }
@@ -216,6 +216,9 @@ class Menu extends JMenuBar {
 
         JMenuItem m41 = new JMenuItem("ru");
         JMenuItem m42 = new JMenuItem("en");
+        JMenuItem m43 = new JMenuItem("mk");
+        JMenuItem m44 = new JMenuItem("it");
+        JMenuItem m45 = new JMenuItem("es");
         m41.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -270,7 +273,82 @@ class Menu extends JMenuBar {
                 }
             }
         );
+        m43.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Gui.resourceBundle = ResourceBundle.getBundle("resource_mk", new Locale("mk", "MK"));
+                m11.setText(Gui.resourceBundle.getString("show"));
+                m12.setText(Gui.resourceBundle.getString("add"));
+                m13.setText(Gui.resourceBundle.getString("remove_first"));
+                m14.setText(Gui.resourceBundle.getString("remove"));
+                m15.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                m21.setText(Gui.resourceBundle.getString("show"));
+                m22.setText(Gui.resourceBundle.getString("add"));
+                m23.setText(Gui.resourceBundle.getString("remove_first"));
+                m24.setText(Gui.resourceBundle.getString("remove"));
+                m25.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                m31.setText(Gui.resourceBundle.getString("log in"));
+                m32.setText(Gui.resourceBundle.getString("sign in"));
+
+                m1.setText(Gui.resourceBundle.getString("commands"));
+                m2.setText(Gui.resourceBundle.getString("help"));
+                m3.setText(Gui.resourceBundle.getString("authorization"));
+                m4.setText(Gui.resourceBundle.getString("laguages"));
+            }
+        });
+        m44.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Gui.resourceBundle = ResourceBundle.getBundle("resource_it", new Locale("it", "IT"));
+                m11.setText(Gui.resourceBundle.getString("show"));
+                m12.setText(Gui.resourceBundle.getString("add"));
+                m13.setText(Gui.resourceBundle.getString("remove_first"));
+                m14.setText(Gui.resourceBundle.getString("remove"));
+                m15.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                m21.setText(Gui.resourceBundle.getString("show"));
+                m22.setText(Gui.resourceBundle.getString("add"));
+                m23.setText(Gui.resourceBundle.getString("remove_first"));
+                m24.setText(Gui.resourceBundle.getString("remove"));
+                m25.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                m31.setText(Gui.resourceBundle.getString("log in"));
+                m32.setText(Gui.resourceBundle.getString("sign in"));
+
+                m1.setText(Gui.resourceBundle.getString("commands"));
+                m2.setText(Gui.resourceBundle.getString("help"));
+                m3.setText(Gui.resourceBundle.getString("authorization"));
+                m4.setText(Gui.resourceBundle.getString("laguages"));
+            }
+        });
+        m45.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Gui.resourceBundle = ResourceBundle.getBundle("resource_es", new Locale("es", "ES"));
+                m11.setText(Gui.resourceBundle.getString("show"));
+                m12.setText(Gui.resourceBundle.getString("add"));
+                m13.setText(Gui.resourceBundle.getString("remove_first"));
+                m14.setText(Gui.resourceBundle.getString("remove"));
+                m15.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                m21.setText(Gui.resourceBundle.getString("show"));
+                m22.setText(Gui.resourceBundle.getString("add"));
+                m23.setText(Gui.resourceBundle.getString("remove_first"));
+                m24.setText(Gui.resourceBundle.getString("remove"));
+                m25.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                m31.setText(Gui.resourceBundle.getString("log in"));
+                m32.setText(Gui.resourceBundle.getString("sign in"));
+
+                m1.setText(Gui.resourceBundle.getString("commands"));
+                m2.setText(Gui.resourceBundle.getString("help"));
+                m3.setText(Gui.resourceBundle.getString("authorization"));
+                m4.setText(Gui.resourceBundle.getString("laguages"));
+            }
+        });
         m4.add(m41);
         m4.add(m42);
+        m4.add(m43);
+        m4.add(m44);
+        m4.add(m45);
     }
 }
