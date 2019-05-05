@@ -82,8 +82,8 @@ class PopUpWindow extends JFrame {
             vericalBox.add(box);
         }
 
-         submitButton = new JButton(Gui.resourceBundle.getString("submit"));
-         closeButton = new JButton(Gui.resourceBundle.getString("close"));
+        submitButton = new JButton(Gui.resourceBundle.getString("submit"));
+        closeButton = new JButton(Gui.resourceBundle.getString("close"));
         submitButton.addActionListener(new SubmitButtonEventListener());
         closeButton.addActionListener(new CloseButtonEventListener());
         Box box = Box.createHorizontalBox();

@@ -34,8 +34,6 @@ final class Key {
 
 public class CmdWorker {
     protected Map<String, Key> cmdMap;
-    protected Date initDate;
-    protected Date lastChangeDate;
     protected final String CMD_NOT_FOUND = "command not found";
     protected final String VOID_STR = "void";
 
@@ -160,11 +158,6 @@ public class CmdWorker {
 
         lastChangeDate = new Date();
         return "";
-    }
-
-    public String info(String str) {
-        String out = "Дата последнего изменения: " + (String)lastChangeDate.toLocaleString() + '\n';
-        return out;
     }
 
     public String show(String ignore) {

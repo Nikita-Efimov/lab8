@@ -170,8 +170,8 @@ class Menu extends JMenuBar {
         m2.add(m24);
         m2.add(m25);
 
-         m31 = new JMenuItem(Gui.resourceBundle.getString("log in"));
-         m32 = new JMenuItem(Gui.resourceBundle.getString("sign in"));
+        m31 = new JMenuItem(Gui.resourceBundle.getString("log in"));
+        m32 = new JMenuItem(Gui.resourceBundle.getString("sign in"));
         m31.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -219,8 +219,6 @@ class Menu extends JMenuBar {
         m41.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("l1");
-
                     Gui.resourceBundle=ResourceBundle.getBundle("resource_ru",
                             new Locale("ru","RU"));
                     m11.setText(Gui.resourceBundle.getString("show"));
@@ -238,20 +236,16 @@ class Menu extends JMenuBar {
                     m31.setText(Gui.resourceBundle.getString("log in"));
                     m32.setText(Gui.resourceBundle.getString("sign in"));
 
-
                     m1.setText(Gui.resourceBundle.getString("commands"));
                     m2.setText(Gui.resourceBundle.getString("help"));
                     m3.setText(Gui.resourceBundle.getString("authorization"));
                     m4.setText(Gui.resourceBundle.getString("laguages"));
-
                 }
             }
         );
         m42.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("l2");
-
                     Gui.resourceBundle=ResourceBundle.getBundle("resource_en",
                             new Locale("en","US"));
                     m11.setText(Gui.resourceBundle.getString("show"));
@@ -268,7 +262,6 @@ class Menu extends JMenuBar {
 
                     m31.setText(Gui.resourceBundle.getString("log in"));
                     m32.setText(Gui.resourceBundle.getString("sign in"));
-
 
                     m1.setText(Gui.resourceBundle.getString("commands"));
                     m2.setText(Gui.resourceBundle.getString("help"));

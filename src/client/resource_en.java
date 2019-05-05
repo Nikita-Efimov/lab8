@@ -2,7 +2,6 @@ import java.util.ListResourceBundle;
 
 public class resource_en extends ListResourceBundle {
     private final static Object[][] contents={
-
             {"close","close"},
             {"submit","submit"},
             {"remove","remove"},
@@ -20,10 +19,7 @@ public class resource_en extends ListResourceBundle {
             {"laguages","laguages"},
             {"name","name"},
             {"size","size"}
-
-
     } ;
-
 
     @Override
     protected Object[][] getContents() {
