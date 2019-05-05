@@ -12,9 +12,11 @@ class Menu extends JMenuBar {
         JMenu m1 = new JMenu("commands");
         JMenu m2 = new JMenu("help");
         JMenu m3 = new JMenu("authorization");
+        JMenu m4 = new JMenu("laguages");
         add(m1);
         add(m2);
         add(m3);
+        add(m4);
 
         JMenuItem m11 = new JMenuItem("show");
         JMenuItem m12 = new JMenuItem("add");
@@ -189,5 +191,24 @@ class Menu extends JMenuBar {
         );
         m3.add(m31);
         m3.add(m32);
+
+        JMenuItem m41 = new JMenuItem("laguage 1");
+        JMenuItem m42 = new JMenuItem("laguage 2");
+        m41.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("l1");
+                }
+            }
+        );
+        m42.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("l2");
+                }
+            }
+        );
+        m4.add(m41);
+        m4.add(m42);
     }
 }
