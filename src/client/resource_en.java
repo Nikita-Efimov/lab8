@@ -9,7 +9,13 @@ public class resource_en extends ListResourceBundle {
             {"remove_first","remove_first"},
             {"show","show"},
             {"add","add"},
-            {"add_if_max","add_if_max"}
+            {"add_if_max","add_if_max"},
+            {"log in","log in"},
+            {"sign in","sign in"},
+            {"commands","commands"},
+            {"help","help"},
+            {"authorization","authorization"},
+            {"laguages","laguages"}
 
 
     } ;

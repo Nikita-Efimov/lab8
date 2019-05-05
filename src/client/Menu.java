@@ -19,11 +19,18 @@ class Menu extends JMenuBar {
     JMenuItem m13;
     JMenuItem m14;
     JMenuItem m15;
+    JMenuItem m21;
+    JMenuItem m22;
+    JMenuItem m23;
+    JMenuItem m24;
+    JMenuItem m25;
+    JMenuItem m31;
+    JMenuItem m32;
     public Menu() {
-         m1 = new JMenu("commands");
-         m2 = new JMenu("help");
-         m3 = new JMenu("authorization");
-         m4 = new JMenu("laguages");
+         m1 = new JMenu(Gui.resourceBundle.getString("commands"));
+         m2 = new JMenu(Gui.resourceBundle.getString("help"));
+         m3 = new JMenu(Gui.resourceBundle.getString("authorization"));
+         m4 = new JMenu(Gui.resourceBundle.getString("laguages"));
         add(m1);
         add(m2);
         add(m3);
@@ -108,11 +115,11 @@ class Menu extends JMenuBar {
         m1.add(m14);
         m1.add(m15);
 
-        JMenuItem m21 = new JMenuItem("show");
-        JMenuItem m22 = new JMenuItem("add");
-        JMenuItem m23 = new JMenuItem("remove_first");
-        JMenuItem m24 = new JMenuItem("remove");
-        JMenuItem m25 = new JMenuItem("add_if_max");
+        m21 = new JMenuItem(Gui.resourceBundle.getString("show"));
+        m22 = new JMenuItem(Gui.resourceBundle.getString("add"));
+        m23 = new JMenuItem(Gui.resourceBundle.getString("remove_first"));
+        m24 = new JMenuItem(Gui.resourceBundle.getString("remove"));
+        m25 = new JMenuItem(Gui.resourceBundle.getString("add_if_max"));
         m21.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -159,8 +166,8 @@ class Menu extends JMenuBar {
         m2.add(m24);
         m2.add(m25);
 
-        JMenuItem m31 = new JMenuItem("log in");
-        JMenuItem m32 = new JMenuItem("sign in");
+         m31 = new JMenuItem(Gui.resourceBundle.getString("log in"));
+         m32 = new JMenuItem(Gui.resourceBundle.getString("sign in"));
         m31.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -216,9 +223,22 @@ class Menu extends JMenuBar {
                     m12.setText(Gui.resourceBundle.getString("add"));
                     m13.setText(Gui.resourceBundle.getString("remove_first"));
                     m14.setText(Gui.resourceBundle.getString("remove"));
-                    m15.setText(Gui.resourceBundle.getString("add_if_max)"));
+                    m15.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                    m21.setText(Gui.resourceBundle.getString("show"));
+                    m22.setText(Gui.resourceBundle.getString("add"));
+                    m23.setText(Gui.resourceBundle.getString("remove_first"));
+                    m24.setText(Gui.resourceBundle.getString("remove"));
+                    m25.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                    m31.setText(Gui.resourceBundle.getString("log in"));
+                    m32.setText(Gui.resourceBundle.getString("sign in"));
 
 
+                    m1.setText(Gui.resourceBundle.getString("commands"));
+                    m2.setText(Gui.resourceBundle.getString("help"));
+                    m3.setText(Gui.resourceBundle.getString("authorization"));
+                    m4.setText(Gui.resourceBundle.getString("laguages"));
 
                 }
             }
@@ -236,6 +256,20 @@ class Menu extends JMenuBar {
                     m14.setText(Gui.resourceBundle.getString("remove"));
                     m15.setText(Gui.resourceBundle.getString("add_if_max"));
 
+                    m21.setText(Gui.resourceBundle.getString("show"));
+                    m22.setText(Gui.resourceBundle.getString("add"));
+                    m23.setText(Gui.resourceBundle.getString("remove_first"));
+                    m24.setText(Gui.resourceBundle.getString("remove"));
+                    m25.setText(Gui.resourceBundle.getString("add_if_max"));
+
+                    m31.setText(Gui.resourceBundle.getString("log in"));
+                    m32.setText(Gui.resourceBundle.getString("sign in"));
+
+
+                    m1.setText(Gui.resourceBundle.getString("commands"));
+                    m2.setText(Gui.resourceBundle.getString("help"));
+                    m3.setText(Gui.resourceBundle.getString("authorization"));
+                    m4.setText(Gui.resourceBundle.getString("laguages"));
                 }
             }
         );

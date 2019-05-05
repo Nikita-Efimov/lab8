@@ -9,7 +9,13 @@ public class resource_ru extends ListResourceBundle {
             {"remove_first","удалить первый"},
             {"show","показать"},
             {"add","добавить"},
-            {"add_if_max","добавить если чото"}
+            {"add_if_max","добавить если чото"},
+            {"log in","Войти"},
+            {"sign in","Зарегистрироваться"},
+            {"commands","команды"},
+            {"help","помощь"},
+            {"authorization","авторизация"},
+            {"laguages","сменить язык"}
 
 
 
