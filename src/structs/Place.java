@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
 abstract class Place {
+
     protected String name = "Без имени";
 
     public Place(String string) {
