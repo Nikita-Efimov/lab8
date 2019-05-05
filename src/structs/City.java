@@ -1,12 +1,36 @@
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
+
+@PrimaryKey(value = "PRIMARY KEY (id, parent_id) ")
+@TableName(name="objects")
 class City extends Place implements Comparable, Serializable {
-	protected Integer areaSize, x, y;
+
+	@FieldType(type = "text",name="name")
+	protected String name = "Без имени";
+	@FieldType(type = "int4",name="area_size")
+	protected Integer areaSize;
+	@FieldType(type = "int4",name="x")
+	protected Integer x;
+	@FieldType(type = "int4",name="y")
+	protected Integer y;
+	@FieldType(type = "timestamp",name="init_date")
 	protected OffsetDateTime initDate;
+
+	@FieldType(type = "SERIAL ",name="id")
+	protected Integer id;
+	@FieldType(type = "int4 REFERENCES users(id) ON DELETE CASCADE ",name="parent_id")
+	protected Integer parent_id;
+
+
 
 	public City() {
 		this("Unnamed", 0);
@@ -32,10 +56,6 @@ class City extends Place implements Comparable, Serializable {
 		this.y = y;
 	}
 
-	public String toJson() {
-		return "{name: \'" + name + "\', size: " + areaSize + " , x: " + x + " , y: " + y + "}";
-	}
-
 	public int getAreaSize() {
 		return areaSize;
 	}
@@ -50,6 +70,12 @@ class City extends Place implements Comparable, Serializable {
 
 	public long getInitDate() {
 		return (long)initDate.toEpochSecond();
+	}
+
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -92,6 +118,15 @@ class City extends Place implements Comparable, Serializable {
 
     @Override
     public String toString() {
-        return "Имя города: " + name + "\nПлощадь: " + areaSize + "\nКоординаты: " + x + ", " + y + "\nДата создания объекта: " + initDate.format(DateTimeFormatter.ofPattern("cccc, dd MMMM, yyyy kk:mm X"));
+        return id+" Имя города: " + name + "\nПлощадь: " + areaSize + "\nКоординаты: " + x + ", " + y + "\nДата создания объекта: " + initDate.format(DateTimeFormatter.ofPattern("cccc, dd MMMM, yyyy kk:mm X"));
     }
+
+
+
+
+
+
+
+
+
 }

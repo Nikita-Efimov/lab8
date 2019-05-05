@@ -1,10 +1,11 @@
-import org.json.JSONException;
-import org.json.JSONObject;
+
+
+import java.lang.reflect.Field;
 import java.sql.*;
 import java.time.OffsetDateTime;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.PriorityQueue;
+import java.util.List;
 
 interface DBUserInteractionable {
     public void addUser(final String login, final String password);
@@ -22,41 +23,27 @@ interface DBCityCollection {
     public boolean removeLower(City city);
 }
 
+
 class DatabaseInteraction implements DBUserInteractionable, DBCityCollection {
-    private static final String DB_DRIVER = "org.postgresql.Driver";
 
-    //  private static final String DB_PASSWORD = "admin";
-    //  private static final String DB_USER = "postgres";
-    //  private static final String DB_CONNECTION = "jdbc:postgresql://127.0.0.1:5432/laba7DB";
 
-    private static final String DB_CONNECTION = "jdbc:postgresql://localhost:5432/lab7";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "root";
-    private Connection dbConnection;
+
+
+     private Connection dbConnection;
+
+
+    private Database db;
 
     public DatabaseInteraction() {
-        getDBConnection();
-        try {
-            activateQuery("CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, login TEXT NOT NULL UNIQUE, password TEXT NOT NULL);");
-            activateQuery("CREATE TABLE IF NOT EXISTS objects (id SERIAL, parent_id int4 REFERENCES users(id) ON DELETE CASCADE, name TEXT NOT NULL, area_size int4, x int4, y int4, init_date int4, PRIMARY KEY (id, parent_id));");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+            db=new Database();
+
+            dbConnection=db.dbConnection;
+
+
     }
 
-    private void getDBConnection() {
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
 
-        try {
-            dbConnection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     private void activateQuery(final String q) throws SQLException {
         Statement statement;
@@ -66,14 +53,13 @@ class DatabaseInteraction implements DBUserInteractionable, DBCityCollection {
 
     @Override
     public void addUser(final String login, final String password) {
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO users (login, password) VALUES (?, ?)");
-            statement.setString(1, login);
-            statement.setString(2, password);
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+       User newuser =new User();
+       newuser.login=login;
+       newuser.password=password;
+
+       db.tables.get( ((TableName)User.class.getAnnotation(TableName.class)).name()).addObjectToTable(newuser);
+
+
     }
 
     @Override
@@ -129,74 +115,48 @@ class DatabaseInteraction implements DBUserInteractionable, DBCityCollection {
     public void add(City city) {
         final int userId = getUserIdFromLogin(UserAuth.getCurrentThreadUserAuth().login);
 
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO objects (parent_id, name, area_size, x, y, init_date) VALUES (?, ?, ?, ?, ?, ?)");
-            statement.setInt(1, userId);
-            statement.setString(2, city.getName());
-            statement.setInt(3, city.getAreaSize());
-            statement.setInt(4, city.getX());
-            statement.setInt(5, city.getY());
-            statement.setInt(6, (int)city.getInitDate());
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+      city.parent_id=userId;
+
+        db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).addObjectToTable(city);
+
     }
 
     @Override
     public void removeFirst() {
         final int userId = getUserIdFromLogin(UserAuth.getCurrentThreadUserAuth().login);
 
-        PreparedStatement statement = null;
-        try {
-            statement = dbConnection.prepareStatement("DELETE FROM objects WHERE ctid IN (SELECT ctid FROM objects WHERE parent_id = ? LIMIT 1)");
+      List<Object> list= db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).getObjectsFromTable();
 
-            statement.setInt(1, userId);
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (Object obj:list ) {
+            City city=(City)obj;
+
+            if(city.parent_id==userId){
+                db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).removeORM(city);
+                break;
+            }
+
+
         }
+
+
     }
 
     @Override
     public void remove(City city) {
         final int userId = getUserIdFromLogin(UserAuth.getCurrentThreadUserAuth().login);
+       if(city.parent_id==userId)
+        db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).removeORM(city);
 
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM objects WHERE (parent_id, name, area_size, x, y) = (?, ?, ?, ?, ?);");
 
-            statement.setInt(1, userId);
-            statement.setString(2, city.getName());
-            statement.setInt(3, city.getAreaSize());
-            statement.setInt(4, city.getX());
-            statement.setInt(5, city.getY());
-            statement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
     public String show() {
         String returnString = "";
 
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM objects;");
-            ResultSet result = statement.executeQuery();
+        returnString= db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).showORM();
 
-            City city = new City();
-            while (result.next()) {
-                city.setName(result.getString("name"));
-                city.x = result.getInt("x");
-                city.y = result.getInt("y");
-                city.areaSize = result.getInt("area_size");
-                city.initDate = OffsetDateTime.ofInstant(Instant.ofEpochSecond(result.getInt("init_date")), ZoneId.systemDefault());
-
-                returnString += city.toString() + '\n';
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         return returnString;
     }
@@ -205,36 +165,25 @@ class DatabaseInteraction implements DBUserInteractionable, DBCityCollection {
     public boolean addIfMax(City city) {
         final int userId = getUserIdFromLogin(UserAuth.getCurrentThreadUserAuth().login);
 
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM objects");
-            ResultSet result = statement.executeQuery();
+        List<Object> list= db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).getObjectsFromTable();
+
+
 
             City maxCity = new City();
             City curCity = new City();
-            while (result.next()){
-                curCity.setName(result.getString("name"));
-                curCity.x = result.getInt("x");
-                curCity.y = result.getInt("y");
-                curCity.areaSize = result.getInt("area_size");
+            for (Object obj:list ){
+                curCity=(City)obj;
+
 
                 if (curCity.compareTo(maxCity) < 0) maxCity = curCity;
             }
 
             if (city.compareTo(maxCity) < 0) {
-                statement = dbConnection.prepareStatement("INSERT INTO objects (parent_id, name, area_size, x, y, init_date) VALUES (?, ?, ?, ?, ?, ?)");
-                statement.setInt(1, userId);
-                statement.setString(2, city.getName());
-                statement.setInt(3, city.getAreaSize());
-                statement.setInt(4, city.getX());
-                statement.setInt(5, city.getY());
-                statement.setInt(6, (int)city.getInitDate());
-                statement.execute();
+                db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).addObjectToTable(city);
 
                 return true;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
         return false;
     }
@@ -244,33 +193,32 @@ class DatabaseInteraction implements DBUserInteractionable, DBCityCollection {
         final int userId = getUserIdFromLogin(UserAuth.getCurrentThreadUserAuth().login);
         boolean isRemoved = false;
 
-        try {
-            PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM objects WHERE parent_id = ?");
-            statement.setInt(1, userId);
+        List<Object> list= db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).getObjectsFromTable();
 
-            ResultSet result = statement.executeQuery();
 
-            statement = dbConnection.prepareStatement("DELETE FROM objects WHERE ctid IN (SELECT ctid FROM objects WHERE id = ? LIMIT 1)");
 
-            String ids = "";
+
+
+
+
             City curCity = new City();
-            while (result.next()) {
-                curCity.setName(result.getString("name"));
-                curCity.x = result.getInt("x");
-                curCity.y = result.getInt("y");
-                curCity.areaSize = result.getInt("area_size");
+        for (Object obj:list ){
+            curCity=(City)obj;
 
-                if(city.compareTo(curCity) > 0) {
-                    statement.setInt(1, result.getInt("id"));
-                    statement.execute();
+
+                if(city.compareTo(curCity) > 0 && city.parent_id==userId ) {
+                    db.tables.get(((TableName)City.class.getAnnotation(TableName.class)).name()).removeORM(curCity);
                     isRemoved = true;
                 }
 
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
         return isRemoved;
     }
+
+
+
+
+
 }
